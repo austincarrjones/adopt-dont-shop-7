@@ -15,6 +15,7 @@ RSpec.describe "the application show" do
         pet_application = PetApplication.create!(name: "Cesar Milan", street: "5 Haytown Rd.", city: "Lebanon", state: "NJ", zip: "08889", description: "I'd be great")
         
         visit "/pet_applications/#{pet_application.id}"
+        save_and_open_page
 
         expect(page).to have_content(pet_application.name)
         expect(page).to have_content(pet_application.street)
@@ -22,6 +23,7 @@ RSpec.describe "the application show" do
         expect(page).to have_content(pet_application.state)
         expect(page).to have_content(pet_application.zip)
         expect(page).to have_content(pet_application.description)
+        expect(page).to have_content("Address: 5 Haytown Rd., Lebanon, NJ, 08889")
     end
 
     xit ""
