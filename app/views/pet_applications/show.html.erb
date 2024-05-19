@@ -1,6 +1,12 @@
-<h1>Application Number</h1>
-<p>Name: <%= @pet_application.name %></p>
-<p>Address: <%= @pet_application.street %>, <%= @pet_application.city %>, <%= @pet_application.state %>, <%= @pet_application.zip %></p>
-<p>Description: <%= @pet_application.description %></p>
+<h1>Application Number: <%= @pet_application.id %></h1>
+<p><strong>Name:</strong> <%= @pet_application.name %></p>
+<p><strong>Address:</strong> <%= @pet_application.street %>, <%= @pet_application.city %>, <%= @pet_application.state %>, <%= @pet_application.zip %></p>
+<p><strong>Description:</strong> <%= @pet_application.description %></p>
+<p><strong>Status:</strong> <%= @pet_application.status %>
+<p><strong>Pets Applying For:</strong>
 
-<%= link_to @pet.name, "/pets/:id" %>
+<ul>
+  <% @pet_application.pets.each do |pet| %>
+    <li><%= link_to pet.name, "/pets/#{pet.id}" %></li>
+  <% end %>
+</ul>
