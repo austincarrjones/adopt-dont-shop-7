@@ -31,12 +31,16 @@ RSpec.describe "the application show" do
         application = PetApplication.create!(name: "Cesar Milan", street: "5 Haytown Rd.", city: "Lebanon", state: "NJ", zip: "08889", description: "I'd be great", status: "In Progress")
         shelter = Shelter.create!(name: "Mystery Building", city: "Irvine CA", foster_program: false, rank: 9)
         pet1 = Pet.create!(name: "Scooby", age: 2, breed: "Great Dane", adoptable: true, shelter_id: shelter.id)
+        pet2 = Pet.create(adoptable: true, age: 3, breed: "doberman", name: "Lobster", shelter_id: shelter.id)
         PetApplicationPet.create!(pet_application: application, pet: pet1)
+        PetApplicationPet.create!(pet_application: application, pet: pet2)
         # binding.pry
-        visit "/pet_applications/#{application.id}" #pet_application_path(cesarsapp)
-        # save_and_open_page
+        visit "/pet_applications/#{application.id}" 
+        #how do do it using this? pet_applications_path(application)
+        save_and_open_page
 
         expect(page).to have_link("Scooby", href: "/pets/#{pet1.id}") 
+        expect(page).to have_link("Lobster", href: "/pets/#{pet2.id}") 
         click_link("#{pet1.name}")
         expect(current_path).to eq("/pets/#{pet1.id}")
     end
