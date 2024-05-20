@@ -1,4 +1,5 @@
 require "rails_helper"
+#US2
 # As a visitor
 # When I visit the pet index page
 # Then I see a link to "Start an Application"
@@ -15,6 +16,7 @@ require "rails_helper"
 # Then I am taken to the new application's show page
 # And I see my Name, address information, and description of why I would make a good home
 # And I see an indicator that this application is "In Progress"
+
 RSpec.describe "Starting an application" do
     it "should show a link to start the application" do
         # application = PetApplication.create!(name: "Cesar Milan", street: "5 Haytown Rd.", city: "Lebanon", state: "NJ", zip: "08889", description: "I'd be great", status: "In Progress")
@@ -46,4 +48,25 @@ RSpec.describe "Starting an application" do
         expect(page).to have_content("Lassie")
         expect(page).to have_content("In Progress")
     end
+
+    #3. Starting an Application, Form not Completed
+    # As a visitor
+    # When I visit the new application page
+    # And I fail to fill in any of the form fields
+    # And I click submit
+    # Then I am taken back to the new applications page
+    # And I see a message that I must fill in those fields.
+    it "should redirect incomplete forms" do
+			shelter = Shelter.create!(name: "Mystery Building", city: "Irvine CA", foster_program: false, rank: 9)
+			pet1 = Pet.create!(name: "Scooby", age: 2, breed: "Great Dane", adoptable: true, shelter_id: shelter.id)
+
+			visit "/pet_applications/new"
+			fill_in("name", with: "Lassie")
+			click_button("Submit")
+			save_and_open_page
+			expect(current_path).to eq("/pet_applications/new")
+			expect(page).to have_content("You must fill in all fields")
+    end
+        
+
 end
