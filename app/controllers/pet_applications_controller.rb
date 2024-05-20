@@ -5,9 +5,11 @@ class PetApplicationsController < ApplicationController
   def create
     @application = PetApplication.create(name: params[:name], street: params[:street], city: params[:city], state: params[:state], zip: params[:zip], description: params[:description])
     if @application.save
+      flash[:notice] = "Application was successfully created."
       redirect_to "/pet_applications/#{@application.id}"
     else
-      redirect_to "/pet_applications/new", notice: "You must fill in all fields"
+      flash[:alert] = "You must fill in all fields"
+      redirect_to "/pet_applications/new"
     end
   end
 

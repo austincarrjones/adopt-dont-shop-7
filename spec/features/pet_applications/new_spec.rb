@@ -63,8 +63,8 @@ RSpec.describe "Starting an application" do
 			visit "/pet_applications/new"
 			fill_in("name", with: "Lassie")
 			click_button("Submit")
-			save_and_open_page
 			expect(current_path).to eq("/pet_applications/new")
+			save_and_open_page
 			expect(page).to have_content("You must fill in all fields")
     end
         
