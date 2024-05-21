@@ -3,8 +3,16 @@
 <p><strong>Address:</strong> <%= @pet_application.street %>, <%= @pet_application.city %>, <%= @pet_application.state %>, <%= @pet_application.zip %></p>
 <p><strong>Description:</strong> <%= @pet_application.description %></p>
 <%# <p><strong>Status:</strong> <%= @pet_application.status %>
-<p><strong>Pets Applying For:</strong>
 <p>Status: In Progress</p>
+
+<p><strong>Pets Applying For:</strong>
+<p>Add a Pet to this Application:</p>
+<%= form_with url: "/pet_applications/#{@pet_application.id}", method: :get, local: true do |f| %>
+  <%= f.label :search %>
+  <%= f.text_field :search %>
+  <%= f.submit "Search" %>
+<% end %>
+
 <ul>
   <% @pet_application.pets.each do |pet| %>
     <li><%= link_to pet.name, "/pets/#{pet.id}" %></li>

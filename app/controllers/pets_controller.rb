@@ -23,7 +23,7 @@ class PetsController < ApplicationController
       redirect_to "/shelters/#{pet_params[:shelter_id]}/pets/new"
       flash[:alert] = "Error: #{error_message(pet.errors)}"
     end
-    binding.pry
+    # binding.pry
   end
 
   def edit
