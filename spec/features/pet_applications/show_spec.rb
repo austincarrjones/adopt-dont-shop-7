@@ -63,12 +63,12 @@ RSpec.describe "the Pet Application Show" do
 			# PetApplicationPet.create!(pet_application: application, pet: pet2)
 			
 			visit "/pet_applications/#{application.id}" 
-			save_and_open_page
+			# save_and_open_page
 			expect(page).to have_content("Add a Pet to this Application")
 			expect(page).to have_button("Search")
 
-			fill_in "Search", with: "Scooby"
-    	click_on("Search")
+			fill_in :pet_search, with: "Scooby"
+    	click_button("Search")
 			
 			expect(current_path).to eq("/pet_applications/#{application.id}")
 			expect(page).to have_content("Scooby")
