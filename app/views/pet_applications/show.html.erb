@@ -3,10 +3,25 @@
 <p><strong>Address:</strong> <%= @pet_application.street %>, <%= @pet_application.city %>, <%= @pet_application.state %>, <%= @pet_application.zip %></p>
 <p><strong>Description:</strong> <%= @pet_application.description %></p>
 <%# <p><strong>Status:</strong> <%= @pet_application.status %>
-<p><strong>Pets Applying For:</strong>
 <p>Status: In Progress</p>
+
+
+<p><strong>Pets Applying For:</strong>
 <ul>
   <% @pet_application.pets.each do |pet| %>
     <li><%= link_to pet.name, "/pets/#{pet.id}" %></li>
   <% end %>
-</ul>
+</ul><br>
+
+<p>Add a Pet to this Application:</p>
+<%= form_with url: "/pet_applications/#{@pet_application.id}", method: :get, data: { turbo: false } do |f| %>
+  <%= f.label "Pet Name" %>
+  <%= f.text_field :pet_search %>
+  <%= f.submit "Search" %><br>
+<% end %><br>
+
+<% if @pets != nil %>
+  <% @pets.each do |pet| %>
+    <%= pet.name %>
+  <% end %>
+<% end %>

@@ -10,39 +10,67 @@ require "rails_helper"
 # names of all pets that this application is for (all names of pets should be links to their show page)
 # The Application's status, either "In Progress", "Pending", "Accepted", or "Rejected"
 
-RSpec.describe "the application show" do
+RSpec.describe "the Pet Application Show" do
+	context "when I visit an applications show page" do
     it "shows the application attributes" do
-        pet_application = PetApplication.create!(name: "Cesar Milan", street: "5 Haytown Rd.", city: "Lebanon", state: "NJ", zip: "08889", description: "I'd be great", status: "In Progress")
-        
-        visit "/pet_applications/#{pet_application.id}"
-        # save_and_open_page
-
-        expect(page).to have_content(pet_application.name)
-        expect(page).to have_content(pet_application.street)
-        expect(page).to have_content(pet_application.city)
-        expect(page).to have_content(pet_application.state)
-        expect(page).to have_content(pet_application.zip)
-        expect(page).to have_content(pet_application.description)
-        expect(page).to have_content(pet_application.status)
-        expect(page).to have_content("Address: 5 Haytown Rd., Lebanon, NJ, 08889")
+			pet_application = PetApplication.create!(name: "Cesar Milan", street: "5 Haytown Rd.", city: "Lebanon", state: "NJ", zip: "08889", description: "I'd be great", status: "In Progress")
+			
+			visit "/pet_applications/#{pet_application.id}"
+			expect(page).to have_content(pet_application.name)
+			expect(page).to have_content(pet_application.street)
+			expect(page).to have_content(pet_application.city)
+			expect(page).to have_content(pet_application.state)
+			expect(page).to have_content(pet_application.zip)
+			expect(page).to have_content(pet_application.description)
+			expect(page).to have_content(pet_application.status)
+			expect(page).to have_content("Address: 5 Haytown Rd., Lebanon, NJ, 08889")
     end
 
-   it "shows names of all pets this application is for (and links to their show page)" do
-        application = PetApplication.create!(name: "Cesar Milan", street: "5 Haytown Rd.", city: "Lebanon", state: "NJ", zip: "08889", description: "I'd be great", status: "In Progress")
-        shelter = Shelter.create!(name: "Mystery Building", city: "Irvine CA", foster_program: false, rank: 9)
-        pet1 = Pet.create!(name: "Scooby", age: 2, breed: "Great Dane", adoptable: true, shelter_id: shelter.id)
-        pet2 = Pet.create(adoptable: true, age: 3, breed: "doberman", name: "Lobster", shelter_id: shelter.id)
-        PetApplicationPet.create!(pet_application: application, pet: pet1)
-        PetApplicationPet.create!(pet_application: application, pet: pet2)
-        # binding.pry
-        visit "/pet_applications/#{application.id}" 
-        #how do do it using this? pet_applications_path(application)
-        save_and_open_page
+  	it "shows names of all pets this application is for (and links to their show page)" do
+			application = PetApplication.create!(name: "Cesar Milan", street: "5 Haytown Rd.", city: "Lebanon", state: "NJ", zip: "08889", description: "I'd be great", status: "In Progress")
+			shelter = Shelter.create!(name: "Mystery Building", city: "Irvine CA", foster_program: false, rank: 9)
+			pet1 = Pet.create!(name: "Scooby", age: 2, breed: "Great Dane", adoptable: true, shelter_id: shelter.id)
+			pet2 = Pet.create(adoptable: true, age: 3, breed: "doberman", name: "Lobster", shelter_id: shelter.id)
+			PetApplicationPet.create!(pet_application: application, pet: pet1)
+			PetApplicationPet.create!(pet_application: application, pet: pet2)
 
-        expect(page).to have_link("Scooby", href: "/pets/#{pet1.id}") 
-        expect(page).to have_link("Lobster", href: "/pets/#{pet2.id}") 
-        click_link("#{pet1.name}")
-        expect(current_path).to eq("/pets/#{pet1.id}")
-    end
+			visit "/pet_applications/#{application.id}" 
 
+			expect(page).to have_link("Scooby", href: "/pets/#{pet1.id}") 
+			expect(page).to have_link("Lobster", href: "/pets/#{pet2.id}") 
+			click_link("#{pet1.name}")
+			expect(current_path).to eq("/pets/#{pet1.id}")
+	 	end
+  end
+
+	# US4
+    # As a visitor
+    # When I visit an application's show page
+    # And that application has not been submitted,
+    # Then I see a section on the page to "Add a Pet to this Application"
+    # In that section I see an input where I can search for Pets by name
+    # When I fill in this field with a Pet's name
+    # And I click submit,
+    # Then I am taken back to the application show page
+    # And under the search bar I see any Pet whose name matches my search
+	context "when the application has not been submitted" do
+		it "has a (Add a Pet to this Application) section with a search field" do 
+			application = PetApplication.create!(name: "Cesar Milan", street: "5 Haytown Rd.", city: "Lebanon", state: "NJ", zip: "08889", description: "I'd be great", status: "In Progress")
+			shelter = Shelter.create!(name: "Mystery Building", city: "Irvine CA", foster_program: false, rank: 9)
+			pet1 = Pet.create!(name: "Scooby", age: 2, breed: "Great Dane", adoptable: true, shelter_id: shelter.id)
+			pet2 = Pet.create!(name: "Lobster", age: 3, breed: "doberman", adoptable: true, shelter_id: shelter.id)
+			
+			visit "/pet_applications/#{application.id}" 
+			# save_and_open_page
+			expect(page).to have_content("Add a Pet to this Application")
+			expect(page).to have_button("Search")
+
+			fill_in :pet_search, with: "Scooby"
+    	click_button("Search")
+			
+			expect(current_path).to eq("/pet_applications/#{application.id}")
+			expect(page).to have_content("Scooby")
+			expect(page).to_not have_content("Lobster")
+		end
+	end
 end

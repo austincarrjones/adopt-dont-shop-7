@@ -75,7 +75,7 @@ RSpec.describe "the pets index" do
     visit "/pets"
 
     fill_in "Search", with: "Ba"
-    click_on("Search")
+    click_button("Search")
 
     expect(page).to have_content(pet_1.name)
     expect(page).to have_content(pet_2.name)

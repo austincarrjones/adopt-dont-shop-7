@@ -29,10 +29,10 @@ pet1 = Pet.create!(
                 shelter_id: shelter.id
 )
 pet2 = Pet.create(
-                adoptable: true,
+                name: "Lobster",
                 age: 3,
                 breed: "doberman",
-                name: "Lobster",
+                adoptable: true,
                 shelter_id: shelter.id
 )
 PetApplicationPet.create!(pet_application: application, pet: pet1)
