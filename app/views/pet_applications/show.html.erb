@@ -16,9 +16,9 @@
 <p>Add a Pet to this Application:</p>
 <%= form_with url: "/pet_applications/#{@pet_application.id}", method: :get, data: { turbo: false } do |f| %>
   <%= f.label "Pet Name" %>
-  <%= f.text_field :pet_search %><br>
-  <%= f.submit "Search" %>
-<% end %>
+  <%= f.text_field :pet_search %>
+  <%= f.submit "Search" %><br>
+<% end %><br>
 
 <% if @pets != nil %>
   <% @pets.each do |pet| %>

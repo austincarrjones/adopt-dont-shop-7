@@ -13,9 +13,10 @@ class PetApplicationsController < ApplicationController
 
   def show
     @pet_application = PetApplication.find(params[:id])
+    # binding.pry
     if params[:pet_search].present?
-      @pets = Pet.search(params[:search])
-      # binding.pry
+      @pets = Pet.search(params[:pet_search])
+    # binding.pry
     end
   end
 end
