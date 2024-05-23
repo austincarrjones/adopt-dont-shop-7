@@ -132,9 +132,13 @@ RSpec.describe "the Pet Application Show" do
 			expect(page).to have_content("Submit this Application")
 			fill_in :reasons, with: "fenced yard"
 			click_button("Submit Application")
-			expect(current_path).to eq("/pet_applications/#{application.id}")
 			# save_and_open_page 
+			expect(current_path).to eq("/pet_applications/#{application.id}")
 			expect(page).to have_content("Status: Pending")
+			expect(page).to have_content("Scooby")
+			expect(page).to have_content("Lobster")
+			expect(page).to_not have_content("Add a Pet to this Application")
+			expect(page).to_not have_content("Submit this Application")
 		end
 	end
 
