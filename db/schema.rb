@@ -24,22 +24,22 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_19_171724) do
   end
 
   create_table "pet_applications", force: :cascade do |t|
-    t.string "name"
-    t.string "street"
-    t.string "city"
-    t.string "zip"
-    t.string "description"
+    t.string "name", null: false
+    t.string "street", null: false
+    t.string "city", null: false
+    t.string "zip", null: false
+    t.string "description", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "state"
-    t.string "status"
+    t.string "state", null: false
+    t.string "status", null: false
   end
 
   create_table "pets", force: :cascade do |t|
-    t.boolean "adoptable"
-    t.integer "age"
-    t.string "breed"
-    t.string "name"
+    t.boolean "adoptable", null: false
+    t.integer "age", null: false
+    t.string "breed", null: false
+    t.string "name", null: false
     t.bigint "shelter_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -47,18 +47,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_19_171724) do
   end
 
   create_table "shelters", force: :cascade do |t|
-    t.boolean "foster_program"
-    t.string "name"
-    t.string "city"
-    t.integer "rank"
+    t.boolean "foster_program", null: false
+    t.string "name", null: false
+    t.string "city", null: false
+    t.integer "rank", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "veterinarians", force: :cascade do |t|
-    t.boolean "on_call"
-    t.integer "review_rating"
-    t.string "name"
+    t.boolean "on_call", null: false
+    t.integer "review_rating", null: false
+    t.string "name", null: false
     t.bigint "veterinary_office_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -66,9 +66,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_19_171724) do
   end
 
   create_table "veterinary_offices", force: :cascade do |t|
-    t.boolean "boarding_services"
-    t.integer "max_patient_capacity"
-    t.string "name"
+    t.boolean "boarding_services", null: false
+    t.integer "max_patient_capacity", null: false
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

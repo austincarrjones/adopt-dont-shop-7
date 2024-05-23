@@ -23,9 +23,14 @@
 <% if @pets != nil %>
   <% @pets.each do |pet| %>
     <%= pet.name %> 
-    <%= button_to "Adopt this Pet", "/pet_application/#{@pet_application.id}/pets/#{pet.id}", method: :post %>
+    <%= button_to "Adopt this Pet", "/pet_applications/#{@pet_application.id}/pets/#{pet.id}", method: :post %>
   <% end %>
 <% end %><br>
 
-
-
+<p><strong>Submit this Application:</strong></p>
+<p>Why would you make a good owner for these pets?</p>
+<%= form_with url: "/pet_applications/#{@pet_application.id}", method: :patch, data: { turbo: false } do |f| %>
+  <%= f.label "Reasons:" %>
+  <%= f.text_area :reasons %>
+  <%= f.submit "Submit Application" %>
+<% end %>

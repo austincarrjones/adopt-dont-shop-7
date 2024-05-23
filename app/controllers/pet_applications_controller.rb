@@ -19,4 +19,11 @@ class PetApplicationsController < ApplicationController
     # binding.pry
     end
   end
+
+  def update
+    pet_application = PetApplication.find(params[:id])
+    if params[:reasons].present?
+      pet_application.status_change("Pending")
+    end
+  end
 end
