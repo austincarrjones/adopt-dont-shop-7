@@ -1,6 +1,5 @@
 class PetsController < ApplicationController
   def index
-    # binding.pry
     if params[:search].present?
       @pets = Pet.search(params[:search])
     else
@@ -24,7 +23,6 @@ class PetsController < ApplicationController
       redirect_to "/shelters/#{pet_params[:shelter_id]}/pets/new"
       flash[:alert] = "Error: #{error_message(pet.errors)}"
     end
-    # binding.pry
   end
 
   def edit
