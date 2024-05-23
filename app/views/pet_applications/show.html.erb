@@ -2,9 +2,7 @@
 <p><strong>Name:</strong> <%= @pet_application.name %></p>
 <p><strong>Address:</strong> <%= @pet_application.street %>, <%= @pet_application.city %>, <%= @pet_application.state %>, <%= @pet_application.zip %></p>
 <p><strong>Description:</strong> <%= @pet_application.description %></p>
-<%# <p><strong>Status:</strong> <%= @pet_application.status %>
-<p>Status: In Progress</p>
-
+<p><strong>Status:</strong> <%= @pet_application.status %></p>
 
 <p><strong>Pets Applying For:</strong>
 <ul>
@@ -27,10 +25,12 @@
   <% end %>
 <% end %><br>
 
-<p><strong>Submit this Application:</strong></p>
-<p>Why would you make a good owner for these pets?</p>
-<%= form_with url: "/pet_applications/#{@pet_application.id}", method: :patch, data: { turbo: false } do |f| %>
-  <%= f.label "Reasons:" %>
-  <%= f.text_area :reasons %>
-  <%= f.submit "Submit Application" %>
+<% if @pet_application.status == "In Progress" %>
+  <p><strong>Submit this Application:</strong></p>
+  <p>Why would you make a good owner for these pets?</p>
+  <%= form_with url: "/pet_applications/#{@pet_application.id}", method: :patch, data: { turbo: false } do |f| %>
+    <%= f.label "Reasons:" %>
+    <%= f.text_area :reasons %>
+    <%= f.submit "Submit Application" %>
+  <% end %>
 <% end %>

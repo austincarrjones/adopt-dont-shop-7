@@ -10,7 +10,7 @@ class PetApplication < ApplicationRecord
   has_many :pets, through: :pet_application_pets
 
   def status_change(status)
-    binding.pry
     self.status = status
+    save
   end
 end
