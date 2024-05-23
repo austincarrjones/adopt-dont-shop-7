@@ -61,7 +61,6 @@ RSpec.describe "the Pet Application Show" do
 			pet2 = Pet.create!(name: "Lobster", age: 3, breed: "doberman", adoptable: true, shelter_id: shelter.id)
 			
 			visit "/pet_applications/#{application.id}" 
-			# save_and_open_page
 			expect(page).to have_content("Add a Pet to this Application")
 			expect(page).to have_button("Search")
 
@@ -72,5 +71,41 @@ RSpec.describe "the Pet Application Show" do
 			expect(page).to have_content("Scooby")
 			expect(page).to_not have_content("Lobster")
 		end
+
+		# 		As a visitor
+		# When I visit an application's show page
+		# And I search for a Pet by name
+		# And I see the names Pets that match my search
+		# Then next to each Pet's name I see a button to "Adopt this Pet"
+		# When I click one of these buttons
+		# Then I am taken back to the application show page
+		# And I see the Pet I want to adopt listed on this application
+
+		it "has a adopt this pet button next to search results" do
+			application = PetApplication.create!(name: "Cesar Milan", street: "5 Haytown Rd.", city: "Lebanon", state: "NJ", zip: "08889", description: "I'd be great", status: "In Progress")
+			shelter = Shelter.create!(name: "Mystery Building", city: "Irvine CA", foster_program: false, rank: 9)
+			pet1 = Pet.create!(name: "Scooby", age: 2, breed: "Great Dane", adoptable: true, shelter_id: shelter.id)
+			pet2 = Pet.create!(name: "Lobster", age: 3, breed: "doberman", adoptable: true, shelter_id: shelter.id)
+
+			visit "/pet_applications/#{application.id}"
+
+			fill_in :pet_search, with: "Scooby"
+    	click_button("Search")
+
+			expect(page).to have_content("Adopt this Pet")
+
+			click_button("Adopt this Pet")
+
+			expect(current_path).to eq("/pet_applications/#{application.id}")
+			expect(page).to have_content("Pets Applying For")
+			expect(page).to have_content("Scooby")
+
+			fill_in :pet_search, with: "Lobster"
+    	click_button("Search")
+			click_button("Adopt this Pet")
+
+			expect(page).to have_content("Lobster")
+		end
+
 	end
 end

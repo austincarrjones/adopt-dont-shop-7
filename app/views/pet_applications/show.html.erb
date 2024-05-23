@@ -13,7 +13,7 @@
   <% end %>
 </ul><br>
 
-<p>Add a Pet to this Application:</p>
+<p><strong>Add a Pet to this Application:</strong></p>
 <%= form_with url: "/pet_applications/#{@pet_application.id}", method: :get, data: { turbo: false } do |f| %>
   <%= f.label "Pet Name" %>
   <%= f.text_field :pet_search %>
@@ -22,6 +22,10 @@
 
 <% if @pets != nil %>
   <% @pets.each do |pet| %>
-    <%= pet.name %>
+    <%= pet.name %> 
+    <%= button_to "Adopt this Pet", "/pet_application/#{@pet_application.id}/pets/#{pet.id}", method: :post %>
   <% end %>
-<% end %>
+<% end %><br>
+
+
+
